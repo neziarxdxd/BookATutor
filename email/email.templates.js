@@ -5,6 +5,7 @@
 // (eg. unsubscribe) in the future.
 
 const url = process.env.NODE_ENV === 'production' ? process.env.hostedClientURL : 'localhost:3000';
+// const url = 'localhost:8080';
 
 module.exports = {
   confirm: id => {
@@ -42,7 +43,7 @@ module.exports = {
   }        
     </style>
     <div>
-    <h1>Welcome to TutorUP!</h1>
+    <h1>Welcome to BookATutor!</h1>
         <a href='http://${url}/confirm/${id}'>
             click to confirm email
         </a>
