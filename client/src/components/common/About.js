@@ -34,10 +34,10 @@ class About extends Component {
                     <Grid container spacing={16}>
                      <Grid item xs={12}>
                       <Typography variant="h3" align="center" className="about-text" id="lg-header">
-                        A peer tutoring network for University of Portland students.
+                        A peer tutoring network for tutors and students.
                       </Typography>
                       <Typography variant="h5" align="center" className="about-text" id="sm-header">
-                        A peer tutoring network for University of Portland students.
+                        A peer tutoring network for tutors and students.
                       </Typography>
                     </Grid>
                     <Grid item xs={12}>
@@ -48,7 +48,7 @@ class About extends Component {
                         Accessibility.    
                       </Typography>
                       <Typography variant="subtitle1" className="about-text">
-                        Tutor UP was created with accessibility in mind. Our goal is to make academic aid more accessible for students of all majors.
+                        Book A Tutor was created with accessibility in mind. Our goal is to make academic aid more accessible for students of all majors.
                       </Typography>
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -56,7 +56,7 @@ class About extends Component {
                         Simplicity.
                       </Typography>
                       <Typography variant="subtitle1" className="about-text">
-                       Simply register with your UP email to access the tutor search page!
+                       Simply register with your email to access the tutor search page!
                       </Typography>
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -77,10 +77,10 @@ class About extends Component {
                     </Grid>
                     <Grid item xs={12} md={4}>
                       <Typography variant="h6" className="about-text" gutterBottom>
-                        Is TutorUP connected to UP authentication?    
+                        Is Book A Tutor connected to your email authentication?    
                       </Typography>
                       <Typography variant="subtitle1" className="about-text">
-                        No. In order to use TutorUP, you will need to create an account. You must register with your UP email address.
+                        No. In order to use Book A Tutor, you will need to create an account. You must pre-register with your email address.
                       </Typography>
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -88,7 +88,7 @@ class About extends Component {
                         Why do I have to confirm my email address?    
                       </Typography>
                       <Typography variant="subtitle1" className="about-text">
-                        In order to protect the information of our tutors, we want to make sure only individuals from University of Portland can access the site.
+                        This is to ensure that you own your own email address in order for you to be emailed properly.
                       </Typography>
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -104,7 +104,7 @@ class About extends Component {
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="caption" align="center" gutterBottom className="about-text">
-                            Developed 2019 by Alexa Baldwin, Danh Nguyen, and Elias Paraiso.
+                            Developed 2020 by Hans Daduya
                         </Typography>
                     </Grid>
                   </Grid>
