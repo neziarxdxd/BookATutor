@@ -23,6 +23,7 @@ class CreateProfile extends Component {
      major: [],
      bio: '',
      type: '',
+     attainment: '',
      minor: [],
      availability: '',
      courses: [],
@@ -72,13 +73,14 @@ class CreateProfile extends Component {
 
  onSubmit = e => {
      e.preventDefault();
-     const { bio, major, minor, availability, courses, type } = this.state;
+     const { bio, major, minor, availability, courses, type, attainment } = this.state;
      const handle = this.props.auth.user.email.replace("@up.edu", "");
 
      const profileData = {
          handle,
          bio,
          type,
+         attainment,
          major, 
          minor,
          courses,
@@ -118,7 +120,7 @@ class CreateProfile extends Component {
  }
 
 render() {
-    const { bio, major, minor, availability, courses, subjects, type } = this.state;
+    const { bio, major, minor, availability, courses, subjects, type, attainment } = this.state;
 
     const minors = filterByOptions(subjects, ['isMinor', "Yes"]);
     const majors = filterByOptions(subjects, ['isMajor', "Yes"]);
@@ -251,7 +253,22 @@ render() {
                           </Input>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={6}>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="attainment">Educational Attainment</InputLabel>
+                            <Select required value={attainment || ''} onChange={this.onChange} MenuProps={{ style: {maxHeight: 300} }} inputProps={{
+                                name: 'attainment',
+                                id: 'attainment'
+                            }}>
+                                <MenuItem value=""></MenuItem>
+                                <MenuItem value="Student">Student</MenuItem>
+                                <MenuItem value="Bachelor's Degree">Bachelor's Degree</MenuItem>
+                                <MenuItem value="Master's Degree">Master's Degree</MenuItem>
+                                <MenuItem value="Doctor's Degree">Doctor's Degree</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
                         <FormControl margin="normal" required fullWidth>
                           <InputLabel htmlFor="availability">Availablity</InputLabel>
                           <Input type="text" id="availability" name="availability" value={availability} multiline fullWidth onChange={this.onChange}>

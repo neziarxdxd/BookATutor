@@ -30,6 +30,10 @@ const ProfileSchema = new Schema({
         type: String,
         required: true
     },
+    attainment: {
+        type: String,
+        required: true
+    },
     disabled: {
         type: Boolean,
         default: false
