@@ -20,6 +20,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import MailIcon from '@material-ui/icons/Email';
 import CalendarIcon from '@material-ui/icons/EventAvailable';
 import InfoIcon from '@material-ui/icons/Info';
+import SchoolIcon from '@material-ui/icons/School';
 
 const styles = theme => ({
     card: {
@@ -117,6 +118,15 @@ const ProfileItem = props => {
                             </Grid>
                         </Grid>
                     }
+                    {profile.attainment &&
+                    <Grid container wrap="nowrap" spacing={16}>
+                          <Grid item>
+                              <SchoolIcon className="icon"/>
+                          </Grid>
+                          <Grid item xs>
+                            <Typography>{profile.attainment}</Typography>
+                          </Grid>
+                    </Grid>}
                 </CardContent>
                 <CardActions>
                 <Button component={Link}

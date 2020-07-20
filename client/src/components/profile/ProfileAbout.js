@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import MailIcon from '@material-ui/icons/Email';
 import CalendarIcon from '@material-ui/icons/EventAvailable';
 import InfoIcon from '@material-ui/icons/Info';
+import SchoolIcon from '@material-ui/icons/School';
 
 import './profile.css';
 
@@ -81,6 +82,15 @@ class ProfileAbout extends Component {
                           </Grid>
                           <Grid item xs>
                             <Typography>{profile.availability}</Typography>
+                          </Grid>
+                    </Grid>}
+                    {profile.attainment &&
+                    <Grid container wrap="nowrap" spacing={16}>
+                          <Grid item>
+                              <SchoolIcon className="icon"/>
+                          </Grid>
+                          <Grid item xs>
+                            <Typography>{profile.attainment}</Typography>
                           </Grid>
                     </Grid>}
                 </CardContent>
