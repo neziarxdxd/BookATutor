@@ -27,6 +27,7 @@ import DisableProfileImg from '../../images/disable-profile.jpg';
 import ViewProfileImg from '../../images/view-profile.jpg';
 import FindTutorImg from '../../images/find-tutor.jpg';
 import BecomeTutorImg from '../../images/become-tutor.jpg';
+import RegisterStudent from '../../images/register-student.jpg';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -228,6 +229,19 @@ class Dashboard extends Component {
                                   className={classes.media}
                                   height="140"
                                   image={BecomeTutorImg}
+                                />
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card className={styles.card}>
+                            <CardActionArea component={Link} to={'/create-student-profile'}>
+                                <CardMedia
+                                  component="img"
+                                  alt="register as student"
+                                  className={classes.media}
+                                  height="140"
+                                  image={RegisterStudent}
                                 />
                             </CardActionArea>
                         </Card>

@@ -21,6 +21,7 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/profile/CreateProfile';
+import CreateStudentProfile from './components/profile/CreateStudentProfile';
 import EditProfile from './components/profile/EditProfile';
 import Subjects from './components/admin/Subjects';
 import ViewSubjects from './components/admin/ViewSubjects';
@@ -89,6 +90,7 @@ class App extends Component {
                   <Route exact path="/about" component={About} />
                   <PrivateRoute exact path="/profile" component={Dashboard}/>
                   <PrivateRoute exact path="/create-profile" component={CreateProfile} />
+                  <PrivateRoute exact path="/create-student-profile" component={CreateStudentProfile} />
                   <PrivateRoute exact path="/edit-profile" component={EditProfile} />
                   <AdminRoute exact path="/subjects" component={Subjects} />
                   <AdminRoute exact path="/view-subjects" component={ViewSubjects} />
