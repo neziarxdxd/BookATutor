@@ -218,7 +218,7 @@ class Dashboard extends Component {
                         )
                     }
                 </Grid>
-            ) : (
+            ) : (user.isTutor) ? (
                 <Grid container spacing={24} justify="center">
                     <Grid item xs={12} sm={6} md={4}>
                         <Card className={styles.card}>
@@ -233,6 +233,22 @@ class Dashboard extends Component {
                             </CardActionArea>
                         </Card>
                     </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card className={styles.card}>
+                            <CardActionArea component={Link} to={'/profiles'}>
+                                <CardMedia
+                                  component="img"
+                                  alt="find a tutor"
+                                  className={classes.media}
+                                  height="140"
+                                  image={FindTutorImg}
+                                />
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                </Grid>
+            ) : (
+                  <Grid container spacing={24} justify="center">
                     <Grid item xs={12} sm={6} md={4}>
                         <Card className={styles.card}>
                             <CardActionArea component={Link} to={'/create-student-profile'}>
@@ -260,14 +276,14 @@ class Dashboard extends Component {
                         </Card>
                     </Grid>
                 </Grid>
-            );
+              );
         }
 
         return (
             <React.Fragment>
                 <div className="padding20">
                     <Typography variant="h4" component="h1" align="center" className="editHeading">
-                        Welcome, {user.firstname}!
+                        Welcome, {user.firstname}! {user.isTutor === true ? "Tutor" : "Student"}
                     </Typography>
                     <br/>
                     {dashboardContent}

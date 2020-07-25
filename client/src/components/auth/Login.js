@@ -122,7 +122,7 @@ class Login extends Component {
               </Paper>
               <div className="link-container">
                 <Link to="/register" className="link reg-link">
-                    New user? Click here to register!
+                    Not yet registerd? Click here to register!
                 </Link>
               </div>
             </div>

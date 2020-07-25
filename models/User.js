@@ -26,6 +26,10 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false
     },
+    isTutor: {
+        type: Boolean,
+        default: false
+    },
     hasProfile: {
         type: Boolean,
         default: false

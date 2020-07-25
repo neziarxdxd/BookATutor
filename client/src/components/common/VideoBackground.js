@@ -46,7 +46,17 @@ class VideoBackground extends Component {
             <img src={Logo} className="logo-width" alt="logo" />
             <div>
               <Button aria-label="Cancel" fullWidth variant="outlined" align="center" className="Button startButton" component={Link} to="/login">
-                  click here to get started!
+                  Click to Login
+              </Button>
+            </div>
+            <div>
+              <Button aria-label="Cancel" fullWidth variant="outlined" align="center" className="Button startButton" component={Link} to="/register-tutor">
+                  Register as Tutor
+              </Button>
+            </div>
+            <div>
+              <Button aria-label="Cancel" fullWidth variant="outlined" align="center" className="Button startButton" component={Link} to="/register">
+                  Register as student
               </Button>
             </div>
           </div>

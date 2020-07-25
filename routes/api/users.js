@@ -37,11 +37,13 @@ router.post('/register', async (req, res, next) => {
 
         // New user
         else {
+            console.log(req.body.isTutor)
             const newUser = new User({
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
                 email: req.body.email,
-                password: req.body.password
+                password: req.body.password,
+                isTutor: req.body.isTutor
             });
 
             if (!setting.isProduction) {
@@ -104,7 +106,8 @@ router.post('/login', async (req, res) => {
                                 lastname: user.lastname,
                                 isAdmin: user.isAdmin,
                                 email: user.email,
-                                confirmed: user.confirmed
+                                confirmed: user.confirmed,
+                                isTutor: user.isTutor
                             }; // Create JWT Payload
                 
                 // Sign token
@@ -143,7 +146,8 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
        firstname: req.user.firstname,
        lastname: req.user.lastname,
        email: req.user.email,
-       isAdmin: req.user.isAdmin
+       isAdmin: req.user.isAdmin,
+       isTutor: req.user.isTutor
    }); 
 });
 

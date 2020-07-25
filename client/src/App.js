@@ -18,6 +18,7 @@ import PrivateRoute from './components/common/PrivateRoute';
 import AppNavbar from './components/layout/AppNavbar';
 import AppLanding from './components/layout/AppLanding';
 import Register from './components/auth/Register';
+import RegisterTutor from './components/auth/RegisterTutor';
 import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/profile/CreateProfile';
@@ -82,6 +83,7 @@ class App extends Component {
                 <Switch>
                   <Route exact path="/" component={AppLanding} />
                   <Route exact path="/register" component={Register} />
+                  <Route exact path="/register-tutor" component={RegisterTutor} />
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/profile/:handle" component={Profile} />
                   <PrivateRoute exact path="/profiles" component={ProfileShowcase} />

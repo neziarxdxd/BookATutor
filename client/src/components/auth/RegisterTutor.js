@@ -63,7 +63,7 @@ const styles = theme => ({
       marginTop: theme.spacing.unit,
     }
   });
-class Register extends Component {
+class RegisterTutor extends Component {
     state = {
         firstname: '',
         lastname: '',
@@ -85,7 +85,7 @@ class Register extends Component {
             email: upEmail,
             password: password,
             password2: password2,
-            isTutor: false
+            isTutor: true
         }
 
         this.props.registerUser(newUser);
@@ -121,7 +121,7 @@ class Register extends Component {
                   <SentimentSatisfiedAlt />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                  Register as Student
+                  Register as Tutor
                 </Typography>
                 <form className={classes.container} autoComplete="off" onSubmit={this.onSubmit}>
                   <FormControl margin="normal" required fullWidth>
@@ -199,7 +199,7 @@ class Register extends Component {
 
 }
 
-Register.propTypes = {
+RegisterTutor.propTypes = {
   registerUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
@@ -211,4 +211,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { registerUser, clearErrors })(withStyles(styles)(withRouter(Register)));
+export default connect(mapStateToProps, { registerUser, clearErrors })(withStyles(styles)(withRouter(RegisterTutor)));
