@@ -51,6 +51,12 @@ export const createProfile = (profileData, history) => dispatch => {
         .catch(err => console.error(err));
 }
 
+export const createStudentProfile = (profileData, history) => dispatch => {
+    axios.post('/api/profile/student-profile', profileData)
+        .then(res => history.push('/profile'))
+        .catch(err => console.error(err));
+}
+
 // Get all profiles (only enabled profiles)
 export const getProfiles = () => dispatch => {
     dispatch(setProfileLoading());

@@ -5,6 +5,7 @@ import ProgressSpinner from '../common/ProgressSpinner';
 
 import { connect } from 'react-redux';
 import { getCurrentProfile, deleteAccount, disableProfileByUser, enableProfileByUser } from '../../redux/actions/profileActions';
+import { getStudentProfile } from '../../redux/actions/studentProfileActions';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -67,13 +68,19 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        const { profile } = this.props;
-        if (Object.keys(profile).length > 0 ) this.props.getCurrentProfile();
-        this.setState({ disabled: profile.disabled });
+        const { user } = this.props.auth;
+        const { profile, studentprofile } = this.props;
+        if (user.isTutor && Object.keys(profile).length > 0 ) {
+          this.props.getCurrentProfile();
+          this.setState({ disabled: profile.disabled });
+        } else if (!user.isTutor && Object.keys(studentprofile).length > 0) {
+          this.props.getStudentProfile();
+        }
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.profile.profile) {
+        const { user } = this.props.auth;
+        if (nextProps.profile.profile && user.isTutor) {
             this.setState({
                 disabled: nextProps.profile.profile.disabled
             });
@@ -125,14 +132,14 @@ class Dashboard extends Component {
     render() {
         const { user } = this.props.auth;
         const { profile, loading } = this.props.profile;
-        const { classes } = this.props;
+        const { classes, studentprofile } = this.props;
         let dashboardContent;
 
         if (profile === null || loading) {
             dashboardContent = <ProgressSpinner />
         }
         else {
-            dashboardContent = Object.keys(profile).length > 0 ? (
+            dashboardContent = (Object.keys(profile).length > 0 && user.isTutor) ? (
                 <Grid container spacing={24} justify="center">
                     <Grid item xs={12} sm={6} md={4}>
                         <Card className={styles.card}>
@@ -218,6 +225,15 @@ class Dashboard extends Component {
                         )
                     }
                 </Grid>
+            ) : (Object.keys(profile).length > 0 && !user.isTutor) ? (
+                    <React.Fragment>
+                      <Button className="textPurple">
+                        Cancel
+                      </Button>
+                      <Button variant="outlined" className="purpleDelete" autoFocus>
+                        Delete Account
+                      </Button>
+                    </React.Fragment>
             ) : (user.isTutor) ? (
                 <Grid container spacing={24} justify="center">
                     <Grid item xs={12} sm={6} md={4}>
@@ -283,7 +299,7 @@ class Dashboard extends Component {
             <React.Fragment>
                 <div className="padding20">
                     <Typography variant="h4" component="h1" align="center" className="editHeading">
-                        Welcome, {user.firstname}! {user.isTutor === true ? "Tutor" : "Student"}
+                        Welcome, {user.firstname}!
                     </Typography>
                     <br/>
                     {dashboardContent}
@@ -342,7 +358,8 @@ Dashboard.propTypes = {
 
 const mapStateToProps = state => ({
     profile: state.profile,
-    auth: state.auth
+    auth: state.auth,
+    studentprofile: state.studentprofile
 });
 
-export default connect(mapStateToProps, { getCurrentProfile, deleteAccount, disableProfileByUser, enableProfileByUser })(withStyles(styles)(Dashboard));
+export default connect(mapStateToProps, { getCurrentProfile, deleteAccount, disableProfileByUser, enableProfileByUser, getStudentProfile })(withStyles(styles)(Dashboard));

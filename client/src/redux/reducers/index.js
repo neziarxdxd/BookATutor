@@ -3,10 +3,12 @@ import authReducer from './authReducer';
 import errorReducer from './errorReducer';
 import profileReducer from './profileReducer';
 import subjectReducer from './subjectReducer';
+import studentProfileReducer from './studentProfileReducer';
 
 export default combineReducers({
     auth: authReducer,
     errors: errorReducer,
     profile: profileReducer,
-    subjects: subjectReducer
+    subjects: subjectReducer,
+    studentprofile: studentProfileReducer,
 });

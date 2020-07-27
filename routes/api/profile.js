@@ -4,10 +4,12 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 
 const Profile = require('../../models/Profile');
+const StudentProfile = require('../../models/StudentProfile');
 const User = require('../../models/User');
 
 // Load validation
 const validateProfileInput = require('../../validation/profileValidation');
+const validateStudentProfileInput = require('../../validation/studentProfileValidation');
 
 // @route   GET api/profile/all
 // @desc    Get all users' profiles
@@ -145,6 +147,75 @@ router.post('/', passport.authenticate('jwt', { session: false}), (req, res) => 
         }
     });
 });
+
+
+// @route   POST api/profile/student-profile
+// @desc    Create or edit student profile
+// @access  Private
+router.post('/student-profile', passport.authenticate('jwt', { session: false}), (req, res) => {
+    const { errors, isValid } = validateStudentProfileInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+    
+    // Get fields
+    const profileFields = {};
+    profileFields.user = req.user.id; 
+
+    if (req.body.handle) profileFields.handle = req.body.handle;
+    if (req.body.grade) profileFields.grade = req.body.grade;
+    if (req.body.school) profileFields.school = req.body.school;
+    profileFields.bio = req.body.bio ? req.body.bio : '';
+
+
+    StudentProfile.findOne({ user: req.user.id }).then(profile => {
+        if (profile) {
+            // Update profile
+            StudentProfile.findOneAndUpdate(
+                { user: req.user.id },
+                { $set: profileFields },
+                { new: true }
+            ).then(profile => res.json(profile));
+        }
+        // Profile not found
+        else {
+            StudentProfile.findOne({ handle: profileFields.handle }).then(profile => {
+                new StudentProfile(profileFields).save().then(profile => res.json(profile));
+            });
+            // set has profile field to true
+            User.findOne({ _id: req.user.id }).then(user => {
+                if (user) {
+                    User.findOneAndUpdate(
+                        { _id: req.user.id },
+                        { $set: { hasProfile: true }}
+                    ).then(user => res.json(user));
+                }
+            });
+        }
+    });
+});
+
+// @route   GET api/profile/student-profile
+// @desc    Get current student's profile
+// @access  Private
+router.get('/student-profile', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const errors = {};
+    try {
+        const profile =  await StudentProfile.findOne({ user: req.user.id })
+            .populate('user', ['isAdmin']);
+        if (!profile) {
+            errors.noprofile = 'There is no profile for this user';
+            return res.status(404).json(errors);
+        }
+        res.json(profile);
+    }
+    catch (err) {
+        res.status(404).json(err);
+    }
+});
+
 
 router.post('/disableProfile', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
