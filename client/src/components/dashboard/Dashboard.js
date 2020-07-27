@@ -132,13 +132,13 @@ class Dashboard extends Component {
     render() {
         const { user } = this.props.auth;
         const { profile, loading } = this.props.profile;
-        const { classes, studentprofile } = this.props;
+        const { classes } = this.props;
         let dashboardContent;
 
         if (profile === null || loading) {
             dashboardContent = <ProgressSpinner />
         }
-        else {
+        else if (user.isTutor) {
             dashboardContent = (Object.keys(profile).length > 0 && user.isTutor) ? (
                 <Grid container spacing={24} justify="center">
                     <Grid item xs={12} sm={6} md={4}>
@@ -225,16 +225,7 @@ class Dashboard extends Component {
                         )
                     }
                 </Grid>
-            ) : (Object.keys(profile).length > 0 && !user.isTutor) ? (
-                    <React.Fragment>
-                      <Button className="textPurple">
-                        Cancel
-                      </Button>
-                      <Button variant="outlined" className="purpleDelete" autoFocus>
-                        Delete Account
-                      </Button>
-                    </React.Fragment>
-            ) : (user.isTutor) ? (
+            ) : (
                 <Grid container spacing={24} justify="center">
                     <Grid item xs={12} sm={6} md={4}>
                         <Card className={styles.card}>
@@ -263,36 +254,7 @@ class Dashboard extends Component {
                         </Card>
                     </Grid>
                 </Grid>
-            ) : (
-                  <Grid container spacing={24} justify="center">
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card className={styles.card}>
-                            <CardActionArea component={Link} to={'/create-student-profile'}>
-                                <CardMedia
-                                  component="img"
-                                  alt="register as student"
-                                  className={classes.media}
-                                  height="140"
-                                  image={RegisterStudent}
-                                />
-                            </CardActionArea>
-                        </Card>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card className={styles.card}>
-                            <CardActionArea component={Link} to={'/profiles'}>
-                                <CardMedia
-                                  component="img"
-                                  alt="find a tutor"
-                                  className={classes.media}
-                                  height="140"
-                                  image={FindTutorImg}
-                                />
-                            </CardActionArea>
-                        </Card>
-                    </Grid>
-                </Grid>
-              );
+            );
         }
 
         return (
