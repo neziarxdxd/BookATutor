@@ -24,6 +24,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/profile/CreateProfile';
 import CreateStudentProfile from './components/profile/CreateStudentProfile';
 import EditProfile from './components/profile/EditProfile';
+import EditStudentProfile from './components/profile/EditStudentProfile';
 import Subjects from './components/admin/Subjects';
 import ViewSubjects from './components/admin/ViewSubjects';
 import EditSubjects from './components/admin/EditSubjects';
@@ -94,6 +95,7 @@ class App extends Component {
                   <PrivateRoute exact path="/create-profile" component={CreateProfile} />
                   <PrivateRoute exact path="/create-student-profile" component={CreateStudentProfile} />
                   <PrivateRoute exact path="/edit-profile" component={EditProfile} />
+                  <PrivateRoute exact path="/edit-student-profile" component={EditStudentProfile} />
                   <AdminRoute exact path="/subjects" component={Subjects} />
                   <AdminRoute exact path="/view-subjects" component={ViewSubjects} />
                   <AdminRoute exact path="/edit-subjects" component={EditSubjects} />

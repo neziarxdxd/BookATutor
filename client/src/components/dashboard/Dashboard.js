@@ -143,7 +143,7 @@ class Dashboard extends Component {
                   <Grid container spacing={24} justify="center">
                       <Grid item xs={12} sm={6} md={4}>
                           <Card className={styles.card}>
-                              <CardActionArea component={Link} to={'/edit-profile'}>
+                              <CardActionArea component={Link} to={'/edit-student-profile'}>
                                   <CardMedia
                                     component="img"
                                     alt="edit profile"
@@ -253,6 +253,19 @@ class Dashboard extends Component {
                               </CardActionArea>
                           </Card>
                       </Grid>
+                      <Grid item xs={12} sm={6} md={4}>
+                          <Card className={styles.card}>
+                              <CardActionArea onClick={this.onDeleteClick}>
+                                  <CardMedia
+                                    component="img"
+                                    alt="delete account"
+                                    className={classes.media}
+                                    height="140"
+                                    image={DeleteAccountImg}
+                                  />
+                              </CardActionArea>
+                          </Card>
+                      </Grid>
                   </Grid>
               );
             }
@@ -262,9 +275,63 @@ class Dashboard extends Component {
               dashboardContent = <ProgressSpinner />
           } else {
             dashboardContent = (Object.keys(profile).length > 0) ? (
-              <Typography>Student with profile</Typography>
+              <Grid container spacing={24} justify="center">
+                <Grid item xs={12} sm={6} md={4}>
+                  <Card className={styles.card}>
+                      <CardActionArea component={Link} to={'/edit-student-profile'}>
+                          <CardMedia
+                            component="img"
+                            alt="edit profile"
+                            className={classes.media}
+                            height="140"
+                            image={EditProfileImg}
+                          />
+                      </CardActionArea>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                    <Card className={styles.card}>
+                        <CardActionArea component={Link} to={'/profiles'}>
+                            <CardMedia
+                              component="img"
+                              alt="find a tutor"
+                              className={classes.media}
+                              height="140"
+                              image={FindTutorImg}
+                            />
+                        </CardActionArea>
+                    </Card>
+                </Grid>
+              </Grid>
             ) : (
-              <Typography>Student without profile</Typography>
+              <Grid container spacing={24} justify="center">
+                <Grid item xs={12} sm={6} md={4}>
+                    <Card className={styles.card}>
+                        <CardActionArea component={Link} to={'/create-student-profile'}>
+                            <CardMedia
+                              component="img"
+                              alt="register as student"
+                              className={classes.media}
+                              height="140"
+                              image={RegisterStudent}
+                            />
+                        </CardActionArea>
+                    </Card>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                    <Card className={styles.card}>
+                        <CardActionArea component={Link} to={'/profiles'}>
+                            <CardMedia
+                              component="img"
+                              alt="find a tutor"
+                              className={classes.media}
+                              height="140"
+                              image={FindTutorImg}
+                            />
+                        </CardActionArea>
+                    </Card>
+                </Grid>
+              </Grid>
             )
           }
         }
