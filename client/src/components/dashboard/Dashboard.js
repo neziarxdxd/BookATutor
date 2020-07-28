@@ -69,11 +69,11 @@ class Dashboard extends Component {
 
     componentDidMount() {
         const { user } = this.props.auth;
-        const { profile, studentprofile } = this.props;
+        const { profile } = this.props;
         if (user.isTutor && Object.keys(profile).length > 0 ) {
           this.props.getCurrentProfile();
           this.setState({ disabled: profile.disabled });
-        } else if (!user.isTutor && Object.keys(studentprofile).length > 0) {
+        } else {
           this.props.getStudentProfile();
         }
     }
@@ -131,130 +131,142 @@ class Dashboard extends Component {
 
     render() {
         const { user } = this.props.auth;
-        const { profile, loading } = this.props.profile;
         const { classes } = this.props;
         let dashboardContent;
 
-        if (profile === null || loading) {
-            dashboardContent = <ProgressSpinner />
-        }
-        else if (user.isTutor) {
-            dashboardContent = (Object.keys(profile).length > 0 && user.isTutor) ? (
-                <Grid container spacing={24} justify="center">
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card className={styles.card}>
-                            <CardActionArea component={Link} to={'/edit-profile'}>
-                                <CardMedia
-                                  component="img"
-                                  alt="edit profile"
-                                  className={classes.media}
-                                  height="140"
-                                  image={EditProfileImg}
-                                />
-                            </CardActionArea>
-                        </Card>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card className={styles.card}>
-                            <CardActionArea component={Link} to={`/profile/${profile.handle}`}>
-                                <CardMedia
-                                  component="img"
-                                  alt="view profile"
-                                  className={classes.media}
-                                  height="140"
-                                  image={ViewProfileImg}
-                                />
-                            </CardActionArea>
-                          </Card>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card className={styles.card}>
-                            <CardActionArea component={Link} to={'/profiles'}>
-                                <CardMedia
-                                  component="img"
-                                  alt="find a tutor"
-                                  className={classes.media}
-                                  height="140"
-                                  image={FindTutorImg}
-                                />
-                            </CardActionArea>
-                        </Card>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card className={styles.card}>
-                            <CardActionArea onClick={this.onDeleteClick}>
-                                <CardMedia
-                                  component="img"
-                                  alt="delete account"
-                                  className={classes.media}
-                                  height="140"
-                                  image={DeleteAccountImg}
-                                />
-                            </CardActionArea>
-                        </Card>
-                    </Grid>
-                    {/* show this if profile is dis/en -abled */}
-                    {this.state.disabled ? (
-                        <Grid item xs={12} sm={6} md={4}>
-                            <Card className={styles.card}>
-                                <CardActionArea onClick={e => this.onProfileSettingClick(e, 'enable')}>
-                                    <CardMedia
+        if (user.isTutor) {
+            const { profile, loading } = this.props.profile;
+            if (profile === null || loading) {
+              dashboardContent = <ProgressSpinner />
+            } else { 
+              dashboardContent = (Object.keys(profile).length > 0 && user.isTutor) ? (
+                  <Grid container spacing={24} justify="center">
+                      <Grid item xs={12} sm={6} md={4}>
+                          <Card className={styles.card}>
+                              <CardActionArea component={Link} to={'/edit-profile'}>
+                                  <CardMedia
                                     component="img"
-                                    alt="enable account"
+                                    alt="edit profile"
                                     className={classes.media}
                                     height="140"
-                                    image={EnableProfileImg}
-                                    />
-                                </CardActionArea>
+                                    image={EditProfileImg}
+                                  />
+                              </CardActionArea>
+                          </Card>
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={4}>
+                          <Card className={styles.card}>
+                              <CardActionArea component={Link} to={`/profile/${profile.handle}`}>
+                                  <CardMedia
+                                    component="img"
+                                    alt="view profile"
+                                    className={classes.media}
+                                    height="140"
+                                    image={ViewProfileImg}
+                                  />
+                              </CardActionArea>
                             </Card>
-                        </Grid>
-                    ) : (
-                        <Grid item xs={12} sm={6} md={4}>
-                            <Card className={styles.card}>
-                                <CardActionArea onClick={e => this.onProfileSettingClick(e, 'disable')}>
-                                    <CardMedia
-                                        component="img"
-                                        alt="disable account"
-                                        className={classes.media}
-                                        height="140"
-                                        image={DisableProfileImg}
-                                    />
-                                </CardActionArea>
-                            </Card>
-                        </Grid>
-                        )
-                    }
-                </Grid>
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={4}>
+                          <Card className={styles.card}>
+                              <CardActionArea component={Link} to={'/profiles'}>
+                                  <CardMedia
+                                    component="img"
+                                    alt="find a tutor"
+                                    className={classes.media}
+                                    height="140"
+                                    image={FindTutorImg}
+                                  />
+                              </CardActionArea>
+                          </Card>
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={4}>
+                          <Card className={styles.card}>
+                              <CardActionArea onClick={this.onDeleteClick}>
+                                  <CardMedia
+                                    component="img"
+                                    alt="delete account"
+                                    className={classes.media}
+                                    height="140"
+                                    image={DeleteAccountImg}
+                                  />
+                              </CardActionArea>
+                          </Card>
+                      </Grid>
+                      {/* show this if profile is dis/en -abled */}
+                      {this.state.disabled ? (
+                          <Grid item xs={12} sm={6} md={4}>
+                              <Card className={styles.card}>
+                                  <CardActionArea onClick={e => this.onProfileSettingClick(e, 'enable')}>
+                                      <CardMedia
+                                      component="img"
+                                      alt="enable account"
+                                      className={classes.media}
+                                      height="140"
+                                      image={EnableProfileImg}
+                                      />
+                                  </CardActionArea>
+                              </Card>
+                          </Grid>
+                      ) : (
+                          <Grid item xs={12} sm={6} md={4}>
+                              <Card className={styles.card}>
+                                  <CardActionArea onClick={e => this.onProfileSettingClick(e, 'disable')}>
+                                      <CardMedia
+                                          component="img"
+                                          alt="disable account"
+                                          className={classes.media}
+                                          height="140"
+                                          image={DisableProfileImg}
+                                      />
+                                  </CardActionArea>
+                              </Card>
+                          </Grid>
+                          )
+                      }
+                  </Grid>
+              ) : (
+                  <Grid container spacing={24} justify="center">
+                      <Grid item xs={12} sm={6} md={4}>
+                          <Card className={styles.card}>
+                              <CardActionArea component={Link} to={'/create-profile'}>
+                                  <CardMedia
+                                    component="img"
+                                    alt="become a tutor"
+                                    className={classes.media}
+                                    height="140"
+                                    image={BecomeTutorImg}
+                                  />
+                              </CardActionArea>
+                          </Card>
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={4}>
+                          <Card className={styles.card}>
+                              <CardActionArea component={Link} to={'/profiles'}>
+                                  <CardMedia
+                                    component="img"
+                                    alt="find a tutor"
+                                    className={classes.media}
+                                    height="140"
+                                    image={FindTutorImg}
+                                  />
+                              </CardActionArea>
+                          </Card>
+                      </Grid>
+                  </Grid>
+              );
+            }
+        } else {
+          const { profile, loading } = this.props.studentprofile;
+          if (profile === null || loading) {
+              dashboardContent = <ProgressSpinner />
+          } else {
+            dashboardContent = (Object.keys(profile).length > 0) ? (
+              <Typography>Student with profile</Typography>
             ) : (
-                <Grid container spacing={24} justify="center">
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card className={styles.card}>
-                            <CardActionArea component={Link} to={'/create-profile'}>
-                                <CardMedia
-                                  component="img"
-                                  alt="become a tutor"
-                                  className={classes.media}
-                                  height="140"
-                                  image={BecomeTutorImg}
-                                />
-                            </CardActionArea>
-                        </Card>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card className={styles.card}>
-                            <CardActionArea component={Link} to={'/profiles'}>
-                                <CardMedia
-                                  component="img"
-                                  alt="find a tutor"
-                                  className={classes.media}
-                                  height="140"
-                                  image={FindTutorImg}
-                                />
-                            </CardActionArea>
-                        </Card>
-                    </Grid>
-                </Grid>
-            );
+              <Typography>Student without profile</Typography>
+            )
+          }
         }
 
         return (
@@ -315,7 +327,8 @@ Dashboard.propTypes = {
     deleteAccount: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired    
+    classes: PropTypes.object.isRequired,
+    getStudentProfile: PropTypes.func.isRequired    
 }
 
 const mapStateToProps = state => ({

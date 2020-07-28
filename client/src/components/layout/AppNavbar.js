@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import { logoutUser } from '../../redux/actions/authActions';
 import { clearCurrentProfile } from '../../redux/actions/profileActions';
+import { clearStudentProfile } from '../../redux/actions/studentProfileActions';
 import { secondaryListItems, authLinks, guestLinks, adminLinks } from './AppNavbarLinks';
 import './layout.css';
 
@@ -144,6 +145,7 @@ class AppNavbar extends Component {
     onLogoutClick = e => {
       e.preventDefault();
       this.props.clearCurrentProfile();
+      this.props.clearStudentProfile();
       this.props.logoutUser();
     }
 
@@ -227,4 +229,4 @@ const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { logoutUser, clearCurrentProfile })(withStyles(styles)(AppNavbar));
+export default connect(mapStateToProps, { logoutUser, clearCurrentProfile, clearStudentProfile })(withStyles(styles)(AppNavbar));

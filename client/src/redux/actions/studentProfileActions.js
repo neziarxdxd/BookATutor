@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { 
     GET_STUDENT_PROFILE, 
-    PROFILE_LOADING
+    PROFILE_LOADING,
+    CLEAR_STUDENT_PROFILE,
 } 
 from './types';
 
@@ -27,5 +28,12 @@ export const getStudentProfile = () => dispatch => {
 export const setProfileLoading = () => {
     return {
         type: PROFILE_LOADING
+    };
+}
+
+// Clear profile
+export const clearStudentProfile = () => {
+    return {
+        type: CLEAR_STUDENT_PROFILE
     };
 }

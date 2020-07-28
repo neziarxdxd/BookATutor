@@ -1,6 +1,7 @@
 import { 
     GET_STUDENT_PROFILE, 
     PROFILE_LOADING, 
+    CLEAR_STUDENT_PROFILE,
 } from '../actions/types';
 
 const initialState = {
@@ -20,6 +21,11 @@ export default function(state = initialState, action) {
                 ...state,
                 profile: action.payload,
                 loading: false
+            };
+        case CLEAR_STUDENT_PROFILE:
+            return {
+                ...state,
+                profile: null
             };
         default:
             return state;
