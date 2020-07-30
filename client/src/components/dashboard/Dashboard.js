@@ -143,7 +143,7 @@ class Dashboard extends Component {
                   <Grid container spacing={24} justify="center">
                       <Grid item xs={12} sm={6} md={4}>
                           <Card className={styles.card}>
-                              <CardActionArea component={Link} to={'/edit-student-profile'}>
+                              <CardActionArea component={Link} to={'/edit-profile'}>
                                   <CardMedia
                                     component="img"
                                     alt="edit profile"

@@ -87,7 +87,7 @@
 
 @media screen and (min-width: 300px) {
   .logo-width {
-    width: 90vw;
+    width: 80vw;
   }
   #image-v {
   	display: inline;
@@ -137,7 +137,7 @@
 
 @media screen and (min-width: 800px) {
   .logo-width {
-    width: 40vw;
+    width: 35vw;
   }
   .about-img {
     display: none;

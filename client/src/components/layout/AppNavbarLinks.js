@@ -10,6 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import PeopleIcon from '@material-ui/icons/People';
 import SearchIcon from '@material-ui/icons/Search';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import InfoIcon from '@material-ui/icons/Info';
 import SubjectIcon from '@material-ui/icons/LibraryBooks'
 import './layout.css';
@@ -34,6 +35,14 @@ export const authLinks = (
           <SearchIcon />
         </ListItemIcon>
         <ListItemText primary="Find a Tutor" />
+      </ListItem>
+    </Link>
+    <Link to="/notifications" className="link">
+      <ListItem button>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Notifications" />
       </ListItem>
     </Link>
   </React.Fragment>

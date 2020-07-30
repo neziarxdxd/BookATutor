@@ -19,6 +19,7 @@ import Img6v from '../../images/background-6-v.png';
 import Img7v from '../../images/background-7-v.png';
 import Img8v from '../../images/background-8-v.png';
 import Logo from '../../images/background-logo.png';
+import Logo2 from '../../images/logo2.png';
 import '../layout/layout.css';
 
 class VideoBackground extends Component {
@@ -43,7 +44,7 @@ class VideoBackground extends Component {
             <img src={imageV} id="image-v" alt="" />
           </div>
           <div className="centered">
-            <img src={Logo} className="logo-width" alt="logo" />
+            <img src={Logo2} className="logo-width" alt="logo" />
             <div>
               <Button aria-label="Cancel" fullWidth variant="outlined" align="center" className="Button startButton" component={Link} to="/login">
                   Click to Login

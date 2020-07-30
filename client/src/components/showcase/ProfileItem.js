@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 // redux import
 import { connect } from 'react-redux';
 
+// component import
+import Booking from './Booking';
+
 // MUI imports
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -42,8 +45,8 @@ const styles = theme => ({
         fontWeight: 'fontWeightBold',
     },
     card: {
-        maxWidth: 300,
-        maxHeight: 300
+        maxWidth: 500,
+        maxHeight: 500
     }
 });
 
@@ -67,6 +70,10 @@ class ProfileItem extends Component {
             open: false
         };
     }
+
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps.studentprofile.profile)
+     }
 
     handleOpen = () => {
         console.log("handleOpen")
@@ -107,6 +114,7 @@ class ProfileItem extends Component {
 
         const profileEmail = profile.user.email === null ? 'NA' : profile.user.email;
 
+        const subjects = [...profile.major, ...profile.minor]
         const majors = profile.major.join(", ");
         const minors = (profile.minor.length > 0) ? profile.minor.join(", ") : "";
         const headerText = profile.type === "Paid" ?
@@ -197,7 +205,7 @@ class ProfileItem extends Component {
                             Edit Profile
                         </Button>
                     }
-                    {profile.user._id !== auth.user.id &&
+                    {profile.user._id !== auth.user.id && !auth.user.isTutor &&
                         <React.Fragment>
                             <Button
                                 size="small"
@@ -212,97 +220,9 @@ class ProfileItem extends Component {
                                 aria-labelledby="alert-dialog-title"
                                 aria-describedby="alert-dialog-description"
                             >
-                            <DialogTitle id="alert-dialog-title">{"Booking Guidelines"}</DialogTitle>
+                            <DialogTitle id="alert-dialog-title">{"Booking Details"}</DialogTitle>
                             <DialogContent>
-                                <DialogContentText id="alert-dialog-description">
-                                    In order to book, contact the tutor for negotiations. Payment could be done through: 
-                                </DialogContentText>
-                                <List>
-                                    <ListItem alignItems="flex-start">
-                                        <ListItemText
-                                            primary={
-                                                <Typography
-                                                    className={classes.heading}
-                                                > 
-                                                    Palawan Pawnshop
-                                                </Typography>
-                                            }
-                                            secondary={
-                                                <React.Fragment>
-                                                    <Typography
-                                                        color="textPrimary"
-                                                    >
-                                                        Sender: Must be the name of student
-                                                    </Typography>
-                                                    <Typography
-                                                        color="textPrimary"
-                                                    >
-                                                        Receiver: Book A Tutor ID # 16-0005-81
-                                                    </Typography>
-                                                </React.Fragment>
-                                            }
-                                        />
-                                    </ListItem>
-                                    <ListItem alignItems="flex-start">
-                                        <ListItemText
-                                            primary={
-                                                <Typography
-                                                    className={classes.heading}
-                                                > 
-                                                    Banco De Oro
-                                                </Typography>
-                                            }
-                                            secondary={
-                                                <React.Fragment>
-                                                    <Typography
-                                                        color="textPrimary"
-                                                    >
-                                                        Swift Code – BNORPHMM
-                                                    </Typography>                                                     <Typography
-                                                        color="textPrimary"
-                                                    >
-                                                        Branch: Iznart, Iloilo City
-                                                    </Typography>
-                                                    <Typography
-                                                        color="textPrimary"
-                                                    >
-                                                        SA # 1780018868
-                                                    </Typography> 
-                                                </React.Fragment>
-                                            }
-                                        />
-                                    </ListItem>
-                                    <ListItem alignItems="flex-start">
-                                        <ListItemText
-                                            primary={
-                                                <Typography
-                                                    className={classes.heading}
-                                                > 
-                                                    Metrobank
-                                                </Typography>
-                                            }
-                                            secondary={
-                                                <React.Fragment>
-                                                    <Typography
-                                                        color="textPrimary"
-                                                    >
-                                                        Swift Code – MBTCPHMM
-                                                    </Typography>
-                                                    <Typography
-                                                        color="textPrimary"
-                                                    >
-                                                        Branch: Jaro, Iloilo City
-                                                    </Typography>
-                                                    <Typography
-                                                        color="textPrimary"
-                                                    >
-                                                        SA # 375-3-375086515
-                                                    </Typography>
-                                                </React.Fragment>
-                                            }
-                                        />
-                                    </ListItem>
-                                </List>
+                                <Booking subjects={subjects} />
                             </DialogContent>
                                 <DialogActions>
                                     <Button onClick={this.handleClose} color="primary" autoFocus>
@@ -327,7 +247,8 @@ ProfileItem.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    studentprofile: state.studentprofile
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(ProfileItem));
