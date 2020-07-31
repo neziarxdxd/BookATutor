@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../../redux/actions/authActions';
 import { clearCurrentProfile } from '../../redux/actions/profileActions';
 import { clearStudentProfile } from '../../redux/actions/studentProfileActions';
+import { clearMessages } from '../../redux/actions/messageActions';
 import { secondaryListItems, authLinks, guestLinks, adminLinks } from './AppNavbarLinks';
 import './layout.css';
 
@@ -146,6 +147,7 @@ class AppNavbar extends Component {
       e.preventDefault();
       this.props.clearCurrentProfile();
       this.props.clearStudentProfile();
+      this.props.clearMessages();
       this.props.logoutUser();
     }
 

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import ProgressSpinner from '../common/ProgressSpinner';
 
 import { connect } from 'react-redux';
+import { getMessages } from '../../redux/actions/messageActions';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -228,6 +229,11 @@ class Notifications extends Component {
     page: 0,
   }
 
+  componentDidMount() {
+    console.log(this.props.auth.user.id)
+    this.props.getMessages(this.props.auth.user.id)
+  }
+
   handleSelectAll = event => {
 
     let selectedUsers;
@@ -280,7 +286,62 @@ class Notifications extends Component {
 
   render() {
       const { classes } = this.props;
+      const { user } = this.props.auth;
+      const { messages, loading } = this.props.message;
       const { rowsPerPage, selectedUsers, page } = this.state;
+
+      let notificationContent;
+
+      if (user.isTutor) {
+        if (this.props.auth.messages === null || loading) {
+          notificationContent = <ProgressSpinner />
+        } else {
+           notificationContent = (
+            <Card>
+              <CardContent className={classes.content}>
+                <PerfectScrollbar>
+                  <div className={classes.inner}>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell padding="checkbox">
+                            <Checkbox
+                              checked={selectedUsers.length === users.length}
+                              color="primary"
+                              indeterminate={
+                                selectedUsers.length > 0 &&
+                                selectedUsers.length < users.length
+                              }
+                              onChange={this.handleSelectAll}
+                            />
+                          </TableCell>
+                          <TableCell>Name</TableCell>
+                          <TableCell>Email</TableCell>
+                          <TableCell>Meetup Address/Online site</TableCell>
+                          <TableCell>Phone</TableCell>
+                          <TableCell>Meeting Time</TableCell>
+                          <TableCell>Duration (in hours)</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      
+                    </Table>
+                  </div>
+                </PerfectScrollbar>
+              </CardContent>
+              <CardActions className={classes.actions}>
+                <TablePagination
+                  component="div"
+                  count={users.length}
+                  onChangePage={this.handlePageChange}
+                  onChangeRowsPerPage={this.handleRowsPerPageChange}
+                  page={page}
+                  rowsPerPage={rowsPerPage}
+                  rowsPerPageOptions={[5, 10, 25]}
+                />
+              </CardActions>
+            </Card> ) 
+        }
+      }
         return (
             <React.Fragment>
               <div className="padding20">
@@ -289,86 +350,8 @@ class Notifications extends Component {
                   </Typography>
                   <br/>
               </div>
-              <Card>
-                <CardContent className={classes.content}>
-                  <PerfectScrollbar>
-                    <div className={classes.inner}>
-                      <Table>
-                        <TableHead>
-                          <TableRow>
-                            <TableCell padding="checkbox">
-                              <Checkbox
-                                checked={selectedUsers.length === users.length}
-                                color="primary"
-                                indeterminate={
-                                  selectedUsers.length > 0 &&
-                                  selectedUsers.length < users.length
-                                }
-                                onChange={this.handleSelectAll}
-                              />
-                            </TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Location</TableCell>
-                            <TableCell>Phone</TableCell>
-                            <TableCell>Registration date</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {users.slice(0, rowsPerPage).map(user => (
-                            <TableRow
-                              className={classes.tableRow}
-                              hover
-                              key={user.id}
-                              selected={selectedUsers.indexOf(user.id) !== -1}
-                            >
-                              <TableCell padding="checkbox">
-                                <Checkbox
-                                  checked={selectedUsers.indexOf(user.id) !== -1}
-                                  color="primary"
-                                  onChange={event => this.handleSelectOne(event, user.id)}
-                                  value="true"
-                                />
-                              </TableCell>
-                              <TableCell>
-                                <div className={classes.nameContainer}>
-                                  <Avatar
-                                    className={classes.avatar}
-                                    src={user.avatarUrl}
-                                  >
-                                    {user.name}
-                                  </Avatar>
-                                  <Typography variant="body1">{user.name}</Typography>
-                                </div>
-                              </TableCell>
-                              <TableCell>{user.email}</TableCell>
-                              <TableCell>
-                                {user.address.city}, {user.address.state},{' '}
-                                {user.address.country}
-                              </TableCell>
-                              <TableCell>{user.phone}</TableCell>
-                              <TableCell>
-                                {user.createdAt}
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </div>
-                  </PerfectScrollbar>
-                </CardContent>
-                <CardActions className={classes.actions}>
-                  <TablePagination
-                    component="div"
-                    count={users.length}
-                    onChangePage={this.handlePageChange}
-                    onChangeRowsPerPage={this.handleRowsPerPageChange}
-                    page={page}
-                    rowsPerPage={rowsPerPage}
-                    rowsPerPageOptions={[5, 10, 25]}
-                  />
-                </CardActions>
-              </Card>
+              {notificationContent}
+              
             </React.Fragment>
         );
     }
@@ -382,7 +365,8 @@ Notifications.propTypes = {
 const mapStateToProps = state => ({
     profile: state.profile,
     auth: state.auth,
-    studentprofile: state.studentprofile
+    studentprofile: state.studentprofile,
+    message: state.message
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(Notifications));
+export default connect(mapStateToProps, { getMessages })(withStyles(styles)(Notifications));

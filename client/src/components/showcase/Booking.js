@@ -23,8 +23,11 @@ import {
   InputLabel,
   MenuItem,
   List,
-  Select
+  Select,
+  Snackbar,
+  SnackbarContent
 } from '@material-ui/core';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const styles = theme => ({
     root: {},
@@ -37,6 +40,13 @@ const styles = theme => ({
       marginRight: theme.spacing.unit,
       width: 200,
     },
+     success: {
+         backgroundColor: '#EEAF30'
+     },
+     message: {
+       display: 'flex',
+       alignItems: 'center',
+     }
 });
 
 
@@ -49,7 +59,8 @@ class Booking extends Component {
         meetup: '',
         starttime: '',
         duration: '',
-        subjects: ''
+        subjects: '',
+        messageToast: false
     }
 
     componentWillReceiveProps(nextProps) {
@@ -69,12 +80,14 @@ class Booking extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        const { name, lastName, email, phone, meetup, starttime, duration, subjects } = this.state;
+        const { name, email, phone, meetup, starttime, duration, subjects } = this.state;
         const { school, grade } = this.props.studentprofile.profile;
+        const { receiverId } = this.props
 
         const time = moment(starttime).format('LLL')
 
         const bookingDetails = {
+            receiverId,
              name,
              email,
              phone, 
@@ -84,11 +97,17 @@ class Booking extends Component {
              school,
              grade,
              subjects
-         }
+         } 
 
-         console.log(bookingDetails);
-         this.props.createMessage(bookingDetails);
+         console.log(receiverId);
+         this.props.createMessage(bookingDetails, this.props.history);
+
+         this.setState({ messageToast: true });
      }
+
+    messageToastClose = () => {
+        this.setState({ messageToast: false });
+    };
 
     handleChange = e => {
         this.setState({
@@ -96,13 +115,21 @@ class Booking extends Component {
         })
     };
 
+
     render() {
         const { classes, subjects } = this.props;
-        const { state, handleChange, onSubmit } = this;
+        const { state, handleChange, onSubmit, messageToastClose } = this;
+        const { name, email, phone, meetup, starttime, duration } = this.state;
 
         const subjectList = subjects.map((subject) =>
             <MenuItem key={subject} value={subject}>{subject}</MenuItem>
         );
+        var valid = false;
+        if (name.length > 0 && email.length > 0 && phone.length > 0 && meetup.length > 0 && starttime.length > 0 && duration.length > 0 && this.state.subjects.length > 0) { 
+            valid = true;
+        } else {
+            valid = false;
+        }
         return (
         <React.Fragment>
               <form
@@ -239,11 +266,30 @@ class Booking extends Component {
                     color="primary"
                     variant="contained"
                     type="submit"
+                    disabled={!valid}
                   >
                     Submit
                   </Button>
                 </CardActions>
               </form>
+              <Snackbar 
+                anchorOrigin={{vertical: 'top', horizontal: 'right',}}
+                open={state.messageToast}
+                autoHideDuration={8000}
+                onClose={messageToastClose}
+                >
+              <SnackbarContent
+                className={classes.success}
+                aria-describedby="client-snackbar"
+                message={
+                  <span id="client-snackbar" className={classes.message}>
+                    <CheckCircleIcon className="toastIcon" />
+                    Message sent successfully! Check you notifications for updates!
+                  </span>
+                }
+              />
+            </Snackbar>
+
         </React.Fragment>
       );
     }

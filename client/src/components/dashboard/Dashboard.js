@@ -236,7 +236,7 @@ class Dashboard extends Component {
                                     className={classes.media}
                                     height="140"
                                     image={BecomeTutorImg}
-                                  />
+                                  /> 
                               </CardActionArea>
                           </Card>
                       </Grid>

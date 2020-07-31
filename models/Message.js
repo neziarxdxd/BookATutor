@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 // TODO: add payment or not
 
 const MessageSchema = new Schema({
-    sender: {
+    senderId: {
         type: Schema.Types.ObjectId,
         ref: 'users'
     },
-    receiver: {
+    receiverId: {
         type: Schema.Types.ObjectId,
         ref: 'users',
     },
@@ -25,7 +25,7 @@ const MessageSchema = new Schema({
         required: true
     },
     time: {
-        type: Date,
+        type: String,
         required: true
     },
     duration: {
@@ -37,6 +37,8 @@ const MessageSchema = new Schema({
         default: true
     }
 
+}, {
+    timestamps: true
 });
 
 module.exports = Message = mongoose.model('message', MessageSchema);

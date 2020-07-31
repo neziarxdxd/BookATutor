@@ -222,7 +222,7 @@ class ProfileItem extends Component {
                             >
                             <DialogTitle id="alert-dialog-title">{"Booking Details"}</DialogTitle>
                             <DialogContent>
-                                <Booking subjects={subjects} />
+                                <Booking subjects={subjects} receiverId={profile.user._id} />
                             </DialogContent>
                                 <DialogActions>
                                     <Button onClick={this.handleClose} color="primary" autoFocus>
