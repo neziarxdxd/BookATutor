@@ -20,7 +20,6 @@ export const getMessages = (userId) => dispatch => {
     axios
       .get(`/api/message/${userId}`)
       .then(res => {
-            console.log(res.data)
             dispatch({
               type: GET_MESSAGES,
               payload: res.data

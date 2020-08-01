@@ -231,4 +231,4 @@ const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { logoutUser, clearCurrentProfile, clearStudentProfile })(withStyles(styles)(AppNavbar));
+export default connect(mapStateToProps, { logoutUser, clearCurrentProfile, clearStudentProfile, clearMessages })(withStyles(styles)(AppNavbar));

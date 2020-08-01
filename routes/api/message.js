@@ -3,6 +3,8 @@ const router = express.Router();
 const passport = require('passport');
 const mongoose = require('mongoose');
 
+const ObjectId = mongoose.Types.ObjectId;
+
 // Load validation
 const validateMessageInput = require('../../validation/messageValidation');
 
@@ -40,10 +42,25 @@ router.post('/', passport.authenticate('jwt', { session: false}), (req, res) => 
 // @route   GET api/message/:userId
 // @desc    Get message by user id
 // @access  Private
-router.get('/:userId', passport.authenticate('jwt', { session: false}), async (req, res) => {
+router.get('/:userId', async (req, res) => {
+    const userId = req.params.userId
     try {
-        const messages = await Message.find({ receiverId: req.params.userId });
-        res.json(messages)
+        // Message.find({ receiverId: req.params.userId })
+        //    .then(messages => res.json(messages))
+        Message.aggregate([
+            {
+                $match: { receiverId: ObjectId(userId) }
+            },
+            { $lookup:
+               {
+                 from: 'users',
+                 localField: 'senderId',
+                 foreignField: '_id',
+                 as: 'userdetails'
+               }
+            }
+        ])
+            .then(messages => res.json(messages))
     }
     catch (err) {
         res.status(404).json(err);

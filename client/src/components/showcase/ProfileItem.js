@@ -90,7 +90,7 @@ class ProfileItem extends Component {
     };
 
     render() {
-        const { profile, auth, onClick, classes } = this.props;
+        const { profile, auth, onClick, classes, studentprofile } = this.props;
         const { open } = this.state;
 
         const classesCard = profile.courses !== undefined ? (
@@ -205,7 +205,7 @@ class ProfileItem extends Component {
                             Edit Profile
                         </Button>
                     }
-                    {profile.user._id !== auth.user.id && !auth.user.isTutor &&
+                    {profile.user._id !== auth.user.id && !auth.user.isTutor && Object.keys(studentprofile.profile).length > 0 &&
                         <React.Fragment>
                             <Button
                                 size="small"

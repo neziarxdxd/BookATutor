@@ -1,3 +1,5 @@
+
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -14,7 +16,10 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import WarningIcon from '@material-ui/icons/Warning';
 import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CancelIcon from '@material-ui/icons/Cancel';
 import {
   CardActions,
   CardContent,
@@ -25,7 +30,9 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  TablePagination
+  TablePagination,
+  Tooltip,
+  IconButton
 } from '@material-ui/core';
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -79,148 +86,6 @@ const styles = theme => ({
      }
 });
 
-const users = [
-  {
-    id: uuid(),
-    name: 'Ekaterina Tankova',
-    address: {
-      country: 'USA',
-      state: 'West Virginia',
-      city: 'Parkersburg',
-      street: '2849 Fulton Street'
-    },
-    email: 'ekaterina.tankova@devias.io',
-    phone: '304-428-3097',
-    avatarUrl: '/images/avatars/avatar_3.png',
-    createdAt: 1555016400000
-  },
-  {
-    id: uuid(),
-    name: 'Cao Yu',
-    address: {
-      country: 'USA',
-      state: 'Bristow',
-      city: 'Iowa',
-      street: '1865  Pleasant Hill Road'
-    },
-    email: 'cao.yu@devias.io',
-    avatarUrl: '/images/avatars/avatar_4.png',
-    phone: '712-351-5711',
-    createdAt: 1555016400000
-  },
-  {
-    id: uuid(),
-    name: 'Alexa Richardson',
-    address: {
-      country: 'USA',
-      state: 'Georgia',
-      city: 'Atlanta',
-      street: '4894  Lakeland Park Drive'
-    },
-    email: 'alexa.richardson@devias.io',
-    phone: '770-635-2682',
-    avatarUrl: '/images/avatars/avatar_2.png',
-    createdAt: 1555016400000
-  },
-  {
-    id: uuid(),
-    name: 'Anje Keizer',
-    address: {
-      country: 'USA',
-      state: 'Ohio',
-      city: 'Dover',
-      street: '4158  Hedge Street'
-    },
-    email: 'anje.keizer@devias.io',
-    avatarUrl: '/images/avatars/avatar_5.png',
-    phone: '908-691-3242',
-    createdAt: 1554930000000
-  },
-  {
-    id: uuid(),
-    name: 'Clarke Gillebert',
-    address: {
-      country: 'USA',
-      state: 'Texas',
-      city: 'Dallas',
-      street: '75247'
-    },
-    email: 'clarke.gillebert@devias.io',
-    phone: '972-333-4106',
-    avatarUrl: '/images/avatars/avatar_6.png',
-    createdAt: 1554757200000
-  },
-  {
-    id: uuid(),
-    name: 'Adam Denisov',
-    address: {
-      country: 'USA',
-      state: 'California',
-      city: 'Bakerfield',
-      street: '317 Angus Road'
-    },
-    email: 'adam.denisov@devias.io',
-    phone: '858-602-3409',
-    avatarUrl: '/images/avatars/avatar_1.png',
-    createdAt: 1554670800000
-  },
-  {
-    id: uuid(),
-    name: 'Ava Gregoraci',
-    address: {
-      country: 'USA',
-      state: 'California',
-      city: 'Redondo Beach',
-      street: '2188  Armbrester Drive'
-    },
-    email: 'ava.gregoraci@devias.io',
-    avatarUrl: '/images/avatars/avatar_7.png',
-    phone: '415-907-2647',
-    createdAt: 1554325200000
-  },
-  {
-    id: uuid(),
-    name: 'Emilee Simchenko',
-    address: {
-      country: 'USA',
-      state: 'Nevada',
-      city: 'Las Vegas',
-      street: '1798  Hickory Ridge Drive'
-    },
-    email: 'emilee.simchenko@devias.io',
-    phone: '702-661-1654',
-    avatarUrl: '/images/avatars/avatar_8.png',
-    createdAt: 1523048400000
-  },
-  {
-    id: uuid(),
-    name: 'Kwak Seong-Min',
-    address: {
-      country: 'USA',
-      state: 'Michigan',
-      city: 'Detroit',
-      street: '3934  Wildrose Lane'
-    },
-    email: 'kwak.seong.min@devias.io',
-    avatarUrl: '/images/avatars/avatar_9.png',
-    phone: '313-812-8947'
-  },
-  {
-    id: uuid(),
-    name: 'Merrile Burgett',
-    address: {
-      country: 'USA',
-      state: 'Utah',
-      city: 'Salt Lake City',
-      street: '368 Lamberts Branch Road'
-    },
-    email: 'merrile.burgett@devias.io',
-    phone: '801-301-7894',
-    avatarUrl: '/images/avatars/avatar_10.png',
-    createdAt: 1522702800000
-  }
-];
-
 
 class Notifications extends Component {
   state = {
@@ -234,56 +99,6 @@ class Notifications extends Component {
     this.props.getMessages(this.props.auth.user.id)
   }
 
-  handleSelectAll = event => {
-
-    let selectedUsers;
-
-    if (event.target.checked) {
-      selectedUsers = users.map(user => user.id);
-    } else {
-      selectedUsers = [];
-    }
-
-    this.setState({
-      selectedUsers: selectedUsers
-    });
-  };
-
-  handleSelectOne = (event, id) => {
-    const { selectedUsers } = this.state;
-    const selectedIndex = selectedUsers.indexOf(id);
-    let newSelectedUsers = [];
-
-    if (selectedIndex === -1) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers, id);
-    } else if (selectedIndex === 0) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(1));
-    } else if (selectedIndex === selectedUsers.length - 1) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelectedUsers = newSelectedUsers.concat(
-        selectedUsers.slice(0, selectedIndex),
-        selectedUsers.slice(selectedIndex + 1)
-      );
-    }
-
-    this.setState({
-      selectedUsers: newSelectedUsers
-    })
-  };
-
-  handlePageChange = (event, page) => {
-    this.setState({
-      page: page
-    })
-  };
-
-  handleRowsPerPageChange = event => {
-    this.setState({
-      rowsPerPage: event.target.value
-    })
-  };
-
   render() {
       const { classes } = this.props;
       const { user } = this.props.auth;
@@ -293,10 +108,10 @@ class Notifications extends Component {
       let notificationContent;
 
       if (user.isTutor) {
-        if (this.props.auth.messages === null || loading) {
+        if (messages === null || loading) {
           notificationContent = <ProgressSpinner />
         } else {
-           notificationContent = (
+           notificationContent = Object.keys(messages).length > 0 ? (
             <Card>
               <CardContent className={classes.content}>
                 <PerfectScrollbar>
@@ -304,42 +119,77 @@ class Notifications extends Component {
                     <Table>
                       <TableHead>
                         <TableRow>
-                          <TableCell padding="checkbox">
-                            <Checkbox
-                              checked={selectedUsers.length === users.length}
-                              color="primary"
-                              indeterminate={
-                                selectedUsers.length > 0 &&
-                                selectedUsers.length < users.length
-                              }
-                              onChange={this.handleSelectAll}
-                            />
-                          </TableCell>
                           <TableCell>Name</TableCell>
                           <TableCell>Email</TableCell>
                           <TableCell>Meetup Address/Online site</TableCell>
                           <TableCell>Phone</TableCell>
                           <TableCell>Meeting Time</TableCell>
                           <TableCell>Duration (in hours)</TableCell>
+                          <TableCell>Subject to teach</TableCell>
+                          <TableCell>Accept or Reject</TableCell>
                         </TableRow>
                       </TableHead>
-                      
+                      <TableBody>
+                        {messages.map(user => (
+                          <TableRow
+                            className={classes.tableRow}
+                            hover
+                            key={user.id}
+                            selected={selectedUsers.indexOf(user._id) !== -1}
+                          >
+                            <TableCell>
+                              <div className={classes.nameContainer}>
+                                <Avatar
+                                  className="purpleAvatar"
+                                  src={user.avatarUrl}
+                                >
+                                  {user.userdetails[0].firstname.charAt(0) + user.userdetails[0].lastname.charAt(0)} 
+                                </Avatar>
+                                <Typography variant="body1">{user.userdetails[0].firstname + " " + user.userdetails[0].lastname}</Typography>
+                              </div>
+                            </TableCell>
+                            <TableCell>{user.email}</TableCell>
+                            <TableCell>
+                              {user.meetup}
+                            </TableCell>
+                            <TableCell>{user.phone}</TableCell>
+                            <TableCell>
+                              {user.time}
+                            </TableCell>
+                            <TableCell>
+                              {user.duration}
+                            </TableCell>
+                            <TableCell>
+                              {user.subjects}
+                            </TableCell>
+                            <TableCell>
+                              <Tooltip title="Accept Student">
+                                <span><IconButton>
+                                    <CheckCircleIcon />
+                                </IconButton></span>
+                              </Tooltip>
+                              <Tooltip title="Decline Student">
+                                <span><IconButton>
+                                    <CancelIcon />
+                                </IconButton></span>
+                              </Tooltip>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
                     </Table>
                   </div>
                 </PerfectScrollbar>
               </CardContent>
-              <CardActions className={classes.actions}>
-                <TablePagination
-                  component="div"
-                  count={users.length}
-                  onChangePage={this.handlePageChange}
-                  onChangeRowsPerPage={this.handleRowsPerPageChange}
-                  page={page}
-                  rowsPerPage={rowsPerPage}
-                  rowsPerPageOptions={[5, 10, 25]}
-                />
-              </CardActions>
-            </Card> ) 
+            </Card> ) : (
+              <Grid item xs={12}>
+                  <div className="padding20">
+                      <Typography align="center" className="colorBlue"><WarningIcon id="warning"/> </Typography>
+                      <Typography variant="h4" align="center" gutterBottom>No notifications found.</Typography>
+                      <Typography variant="subtitle1" align="center">Check later for possible tutor appointments.</Typography>
+                  </div>
+              </Grid>
+            )
         }
       }
         return (
@@ -370,3 +220,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, { getMessages })(withStyles(styles)(Notifications));
+
