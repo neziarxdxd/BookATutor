@@ -13,6 +13,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import InfoIcon from '@material-ui/icons/Info';
 import SubjectIcon from '@material-ui/icons/LibraryBooks'
+import NotificationsIcon from '@material-ui/icons/Notifications';
 import './layout.css';
 
 const ListItemLink = props => {
@@ -37,10 +38,18 @@ export const authLinks = (
         <ListItemText primary="Find a Tutor" />
       </ListItem>
     </Link>
-    <Link to="/notifications" className="link">
+    <Link to="/appointments" className="link">
       <ListItem button>
         <ListItemIcon>
           <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Appointments" />
+      </ListItem>
+    </Link>
+    <Link to="/notifications" className="link">
+      <ListItem button>
+        <ListItemIcon>
+          <NotificationsIcon />
         </ListItemIcon>
         <ListItemText primary="Notifications" />
       </ListItem>

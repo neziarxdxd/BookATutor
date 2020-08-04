@@ -10,15 +10,14 @@ from './types';
 // Create Message
 export const createMessage = (bookingDetails, history) => dispatch => {
     axios.post('/api/message', bookingDetails)
-        .then(res => console.log(''))
         .catch(err => console.error(err));
 }
 
 // Get all messages of user
-export const getMessages = (userId) => dispatch => {
+export const getMessages = (userId, isTutor) => dispatch => {
     dispatch(setMessageLoading());
     axios
-      .get(`/api/message/${userId}`)
+      .post(`/api/message/${userId}/${isTutor}`)
       .then(res => {
             dispatch({
               type: GET_MESSAGES,
@@ -46,4 +45,42 @@ export const setMessageLoading = () => {
     return {
         type: MESSAGE_LOADING
     };
+}
+
+// Decline Message
+export const declineMessage = (message, user) => dispatch => {
+    axios.post('api/message/deleteMessage', {id: message._id})
+    .then(() => {
+      axios.post('api/notification/createNotification', message)
+    })
+    .catch(err => console.error(err));
+}
+
+// Accept Message
+export const acceptMessage = (message, receiverId, senderId) => dispatch => {
+    message.receiverId = senderId
+    message.senderId = receiverId
+    console.log(message)
+    axios.post('api/message/deleteMessage', {id: message._id})
+    .then(() => {
+      axios.post('api/message', message)
+      .then(() => {
+        axios
+        .post(`/api/message/${receiverId}/true`)
+        .then(res => {
+              dispatch({
+                type: GET_MESSAGES,
+                payload: res.data
+              })
+          }
+        )
+        .catch(err =>
+          dispatch({
+            type: GET_MESSAGES,
+            payload: null
+          })
+        );
+      })
+    })
+    .catch(err => console.error(err));
 }

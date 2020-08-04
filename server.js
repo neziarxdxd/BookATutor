@@ -18,6 +18,7 @@ const profile = require('./routes/api/profile');
 const courses = require('./routes/api/courses');
 const subjects = require('./routes/api/subjects');
 const message = require('./routes/api/message');
+const notification = require('./routes/api/notification');
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -66,6 +67,7 @@ app.use('/api/profile', profile);
 app.use('/api/courses', courses);
 app.use('/api/subjects', subjects);
 app.use('/api/message', message);
+app.use('/api/notification', notification);
 app.get('/email/confirm/:id', emailController.confirmEmail);
 
 if (setting.isProduction) {

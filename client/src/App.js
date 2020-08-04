@@ -21,6 +21,7 @@ import Register from './components/auth/Register';
 import RegisterTutor from './components/auth/RegisterTutor';
 import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
+import Appointments from './components/appointments/Appointments';
 import Notifications from './components/notifications/Notifications';
 import CreateProfile from './components/profile/CreateProfile';
 import CreateStudentProfile from './components/profile/CreateStudentProfile';
@@ -93,6 +94,7 @@ class App extends Component {
                   <Route exact path='/confirm/:id' component={UserConfirm} />
                   <Route exact path="/about" component={About} />
                   <PrivateRoute exact path="/profile" component={Dashboard}/>
+                  <PrivateRoute exact path="/appointments" component={Appointments}/>
                   <PrivateRoute exact path="/notifications" component={Notifications}/>
                   <PrivateRoute exact path="/create-profile" component={CreateProfile} />
                   <PrivateRoute exact path="/create-student-profile" component={CreateStudentProfile} />

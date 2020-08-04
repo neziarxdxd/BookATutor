@@ -58,8 +58,8 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, { getProfiles, getSubjects })(withStyles(styles)(ProfilesShowcase))
 
-
-<DialogContentText id="alert-dialog-description">
+<DialogContent>
+    <DialogContentText id="alert-dialog-description">
         In order to book, contact the tutor for negotiations. Payment could be done through: 
     </DialogContentText>
     <List>

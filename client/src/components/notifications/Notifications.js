@@ -1,64 +1,28 @@
-
-
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import ProgressSpinner from '../common/ProgressSpinner';
 
 import { connect } from 'react-redux';
-import { getMessages } from '../../redux/actions/messageActions';
 
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardMedia from '@material-ui/core/CardMedia';
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import WarningIcon from '@material-ui/icons/Warning';
-import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
-import CancelIcon from '@material-ui/icons/Cancel';
 import {
-  CardActions,
+  Card,
+  CardHeader,
   CardContent,
-  Avatar,
-  Checkbox,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  TablePagination,
-  Tooltip,
+  CardActions,
+  Button,
+  Divider,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
   IconButton
 } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-import PerfectScrollbar from 'react-perfect-scrollbar';
+import moment from 'moment';
 import uuid from 'uuid/v1';
 
-
-import { withStyles } from '@material-ui/core/styles';
-
 const styles = theme => ({
-    root: {},
-    content: {
-      padding: 0
-    },
-    inner: {
-      minWidth: 1050
-    },
-    nameContainer: {
-      display: 'flex',
-      alignItems: 'center'
-    },
-    avatar: {
-      marginRight: 10
-    },
-    actions: {
-      justifyContent: 'flex-end'
-    },
     card: {
       minWidth: 300,
       margin: 100
@@ -86,131 +50,95 @@ const styles = theme => ({
      }
 });
 
+const products = [
+  {
+    id: uuid(),
+    name: 'Dropbox',
+    imageUrl: '/images/products/product_1.png',
+    updatedAt: moment().subtract(2, 'hours')
+  },
+  {
+    id: uuid(),
+    name: 'Medium Corporation',
+    imageUrl: '/images/products/product_2.png',
+    updatedAt: moment().subtract(2, 'hours')
+  },
+  {
+    id: uuid(),
+    name: 'Slack',
+    imageUrl: '/images/products/product_3.png',
+    updatedAt: moment().subtract(3, 'hours')
+  },
+  {
+    id: uuid(),
+    name: 'Lyft',
+    imageUrl: '/images/products/product_4.png',
+    updatedAt: moment().subtract(5, 'hours')
+  },
+  {
+    id: uuid(),
+    name: 'GitHub',
+    imageUrl: '/images/products/product_5.png',
+    updatedAt: moment().subtract(9, 'hours')
+  }
+];
+
 
 class Notifications extends Component {
-  state = {
-    rowsPerPage: 10,
-    selectedUsers: [],
-    page: 0,
-  }
-
-  componentDidMount() {
-    console.log(this.props.auth.user.id)
-    this.props.getMessages(this.props.auth.user.id)
-  }
 
   render() {
-      const { classes } = this.props;
-      const { user } = this.props.auth;
-      const { messages, loading } = this.props.message;
-      const { rowsPerPage, selectedUsers, page } = this.state;
-
-      let notificationContent;
-
-      if (user.isTutor) {
-        if (messages === null || loading) {
-          notificationContent = <ProgressSpinner />
-        } else {
-           notificationContent = Object.keys(messages).length > 0 ? (
-            <Card>
-              <CardContent className={classes.content}>
-                <PerfectScrollbar>
-                  <div className={classes.inner}>
-                    <Table>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>Name</TableCell>
-                          <TableCell>Email</TableCell>
-                          <TableCell>Meetup Address/Online site</TableCell>
-                          <TableCell>Phone</TableCell>
-                          <TableCell>Meeting Time</TableCell>
-                          <TableCell>Duration (in hours)</TableCell>
-                          <TableCell>Subject to teach</TableCell>
-                          <TableCell>Accept or Reject</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {messages.map(user => (
-                          <TableRow
-                            className={classes.tableRow}
-                            hover
-                            key={user.id}
-                            selected={selectedUsers.indexOf(user._id) !== -1}
-                          >
-                            <TableCell>
-                              <div className={classes.nameContainer}>
-                                <Avatar
-                                  className="purpleAvatar"
-                                  src={user.avatarUrl}
-                                >
-                                  {user.userdetails[0].firstname.charAt(0) + user.userdetails[0].lastname.charAt(0)} 
-                                </Avatar>
-                                <Typography variant="body1">{user.userdetails[0].firstname + " " + user.userdetails[0].lastname}</Typography>
-                              </div>
-                            </TableCell>
-                            <TableCell>{user.email}</TableCell>
-                            <TableCell>
-                              {user.meetup}
-                            </TableCell>
-                            <TableCell>{user.phone}</TableCell>
-                            <TableCell>
-                              {user.time}
-                            </TableCell>
-                            <TableCell>
-                              {user.duration}
-                            </TableCell>
-                            <TableCell>
-                              {user.subjects}
-                            </TableCell>
-                            <TableCell>
-                              <Tooltip title="Accept Student">
-                                <span><IconButton>
-                                    <CheckCircleIcon />
-                                </IconButton></span>
-                              </Tooltip>
-                              <Tooltip title="Decline Student">
-                                <span><IconButton>
-                                    <CancelIcon />
-                                </IconButton></span>
-                              </Tooltip>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                </PerfectScrollbar>
-              </CardContent>
-            </Card> ) : (
-              <Grid item xs={12}>
-                  <div className="padding20">
-                      <Typography align="center" className="colorBlue"><WarningIcon id="warning"/> </Typography>
-                      <Typography variant="h4" align="center" gutterBottom>No notifications found.</Typography>
-                      <Typography variant="subtitle1" align="center">Check later for possible tutor appointments.</Typography>
-                  </div>
-              </Grid>
-            )
-        }
-      }
+    const { classes } = this.props;
         return (
             <React.Fragment>
-              <div className="padding20">
-                  <Typography variant="h4" component="h1" align="center" className="editHeading">
-                      Notifications
-                  </Typography>
-                  <br/>
-              </div>
-              {notificationContent}
-              
+                <Card>
+                  <CardHeader
+                    subtitle={`${products.length} in total`}
+                    title="Latest products"
+                  />
+                  <Divider />
+                  <CardContent className={classes.content}>
+                    <List>
+                      {products.map((product, i) => (
+                        <ListItem
+                          divider={i < products.length - 1}
+                          key={product.id}
+                        >
+                          <ListItemAvatar>
+                            <img
+                              alt="Product"
+                              className={classes.image}
+                              src={product.imageUrl}
+                            />
+                          </ListItemAvatar>
+                          <ListItemText
+                            primary={product.name}
+                            secondary={`Updated ${product.updatedAt.fromNow()}`}
+                          />
+                          <IconButton
+                            edge="end"
+                            size="small"
+                          >
+                            <MoreVertIcon />
+                          </IconButton>
+                        </ListItem>
+                      ))}
+                    </List>
+                  </CardContent>
+                  <Divider />
+                  <CardActions className={classes.actions}>
+                    <Button
+                      color="primary"
+                      size="small"
+                      variant="text"
+                    >
+                      View all <ArrowRightIcon />
+                    </Button>
+                  </CardActions>
+                </Card>
             </React.Fragment>
         );
     }
 }
-
-Notifications.propTypes = {
-  className: PropTypes.string,
-  users: PropTypes.array.isRequired
-};
 
 const mapStateToProps = state => ({
     profile: state.profile,
@@ -219,5 +147,5 @@ const mapStateToProps = state => ({
     message: state.message
 });
 
-export default connect(mapStateToProps, { getMessages })(withStyles(styles)(Notifications));
+export default connect(mapStateToProps)(withStyles(styles)(Notifications));
 

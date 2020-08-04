@@ -39,14 +39,13 @@ router.post('/', passport.authenticate('jwt', { session: false}), (req, res) => 
 });
 
 
-// @route   GET api/message/:userId
-// @desc    Get message by user id
+// @route   POST api/message/:userId
+// @desc    Post message by user id
 // @access  Private
-router.get('/:userId', async (req, res) => {
+router.post('/:userId/:isTutor', passport.authenticate('jwt', { session: false }), (req, res) => {
     const userId = req.params.userId
-    try {
-        // Message.find({ receiverId: req.params.userId })
-        //    .then(messages => res.json(messages))
+    const isTutor = req.params.isTutor
+    if (isTutor == "true") {
         Message.aggregate([
             {
                 $match: { receiverId: ObjectId(userId) }
@@ -58,14 +57,84 @@ router.get('/:userId', async (req, res) => {
                  foreignField: '_id',
                  as: 'userdetails'
                }
-            }
+            },
+            {
+                "$project": {
+                    "userdetails.password": 0,
+                }
+            },
+        ])
+            .then(messages => res.json(messages))
+    } else {
+        console.log(isTutor)
+        Message.aggregate([
+            {
+                $match: { receiverId: ObjectId(userId) }
+            },
+            { $lookup:
+               {
+                 from: 'users',
+                 localField: 'senderId',
+                 foreignField: '_id',
+                 as: 'userdetails'
+               }
+            },
+            { $lookup:
+               {
+                 from: 'profiles',
+                 localField: 'senderId',
+                 foreignField: 'user',
+                 as: 'profiledetails'
+               }
+            },
         ])
             .then(messages => res.json(messages))
     }
-    catch (err) {
-        res.status(404).json(err);
-    }
   });
 
+router.post('/declineMessage', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        console.log(req.body.message)
+    }
+    catch (err) {
+        console.error(err);
+
+    }
+});
+
+router.post('/acceptMessage', passport.authenticate('jwt', { session: false }), (req, res) => {
+    try {
+        const message = req.body.message
+        const messageFields = {};
+        messageFields.senderId = message.receiverId; 
+        messageFields.receiverId = message.senderId
+        messageFields.email = message.email;
+        messageFields.phone = message.phone;
+        messageFields.meetup = message.meetup;
+        messageFields.time = message.time;
+        messageFields.duration = message.duration;
+        messageFields.subjects = message.subjects;
+        console.log(messageFields)
+        Message.findOneAndDelete(
+            { _id: message._id }
+        ).then(() => {
+            new Message(messageFields).save()
+                .then(messages => res.send(messages));
+        })
+
+    }
+    catch (err) {
+        console.error(err);
+    }
+});
+
+router.post('/deleteMessage', passport.authenticate('jwt', { session: false }), (req, res) => {
+    const id = req.body.id
+    console.log(req.body)
+    Message.findOneAndDelete(
+        { _id: id }
+    ).then(() => res.json({ success: true }))
+    .catch(err => console.log(err));
+});
 
 module.exports = router;
