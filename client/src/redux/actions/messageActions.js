@@ -52,6 +52,22 @@ export const declineMessage = (message, user) => dispatch => {
     axios.post('api/message/deleteMessage', {id: message._id})
     .then(() => {
       axios.post('api/notification/createNotification', message)
+      .then(() => {
+        axios.
+        post(`/api/message/${message.receiverId}/true`)
+        .then(res => {
+          dispatch({
+            type: GET_MESSAGES,
+            payload: res.data
+          })
+        })
+        .catch(err =>
+          dispatch({
+            type: GET_MESSAGES,
+            payload: null
+          })
+        );
+      })
     })
     .catch(err => console.error(err));
 }

@@ -46,14 +46,6 @@ export const authLinks = (
         <ListItemText primary="Appointments" />
       </ListItem>
     </Link>
-    <Link to="/notifications" className="link">
-      <ListItem button>
-        <ListItemIcon>
-          <NotificationsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Notifications" />
-      </ListItem>
-    </Link>
   </React.Fragment>
 );
 
