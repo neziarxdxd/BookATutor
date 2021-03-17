@@ -39,7 +39,8 @@ import {
   List,
   ListItem,
   ListItemText,
-  Input 
+  Input,
+  Paper
 } from '@material-ui/core';
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -50,7 +51,11 @@ import { removeByMatch } from '../../utils/lodashOps';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
-    root: {},
+    root: {
+      width: '100%',
+      marginTop: theme.spacing.unit * 3,
+      overflowX: 'auto',
+    },
     content: {
       padding: 0
     },
@@ -63,9 +68,6 @@ const styles = theme => ({
     },
     avatar: {
       marginRight: 10
-    },
-    actions: {
-      justifyContent: 'flex-end'
     },
     card: {
       minWidth: 300,
@@ -84,9 +86,6 @@ const styles = theme => ({
      },
      purpleText: {
          color: '#1E1656'
-     },
-     media: {
-        objectFit: 'cover',
      },
      success: {
          backgroundColor: '#EEAF30'
@@ -217,75 +216,70 @@ class Appointments extends Component {
           notificationContent = <ProgressSpinner />
         } else {
            notificationContent = Object.keys(messages).length > 0 ? (
-            <Card>
-              <CardContent className={classes.content}>
-                <PerfectScrollbar>
-                  <div className={classes.inner}>
-                    <Table>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>Name</TableCell>
-                          <TableCell>Email</TableCell>
-                          <TableCell>Meetup Address/Online site</TableCell>
-                          <TableCell>Phone</TableCell>
-                          <TableCell>Meeting Time</TableCell>
-                          <TableCell>Duration (in hours)</TableCell>
-                          <TableCell>Subject to teach</TableCell>
-                          <TableCell>Accept or Reject</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {messages.map(message => (
-                          <TableRow
-                            className={classes.tableRow}
-                            hover
-                            key={message._id}
-                            selected={selectedUsers.indexOf(message._id) !== -1}
+            <Paper className={classes.root}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Email</TableCell>
+                    <TableCell>Meetup Address/Online site</TableCell>
+                    <TableCell>Phone</TableCell>
+                    <TableCell>Meeting Time</TableCell>
+                    <TableCell>Duration (in hours)</TableCell>
+                    <TableCell>Subject to teach</TableCell>
+                    <TableCell>Accept or Reject</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {messages.map(message => (
+                    <TableRow
+                      className={classes.tableRow}
+                      hover
+                      key={message._id}
+                      selected={selectedUsers.indexOf(message._id) !== -1}
+                    >
+                      <TableCell>
+                        <div className={classes.nameContainer}>
+                          <Avatar
+                            className="purpleAvatar"
                           >
-                            <TableCell>
-                              <div className={classes.nameContainer}>
-                                <Avatar
-                                  className="purpleAvatar"
-                                >
-                                  {message.userdetails[0].firstname.charAt(0) + message.userdetails[0].lastname.charAt(0)} 
-                                </Avatar>
-                                <Typography variant="body1">{message.userdetails[0].firstname + " " + message.userdetails[0].lastname}</Typography>
-                              </div>
-                            </TableCell>
-                            <TableCell>{message.email}</TableCell>
-                            <TableCell>
-                              {message.meetup}
-                            </TableCell>
-                            <TableCell>{message.phone}</TableCell>
-                            <TableCell>
-                              {message.time}
-                            </TableCell>
-                            <TableCell>
-                              {message.duration}
-                            </TableCell>
-                            <TableCell>
-                              {message.subjects}
-                            </TableCell>
-                            <TableCell>
-                              <Tooltip title="Accept Student">
-                                <span><IconButton>
-                                    <CheckCircleIcon onClick={((e) => this.selectAccept(e, message._id, user, message, 'accept'))} />
-                                </IconButton></span>
-                              </Tooltip>
-                              <Tooltip title="Decline Student">
-                                <span><IconButton>
-                                    <CancelIcon onClick={((e) => this.selectAccept(e, message._id ,user, message, 'decline'))} />
-                                </IconButton></span>
-                              </Tooltip>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                </PerfectScrollbar>
-              </CardContent>
-            </Card> ) : (
+                            {message.userdetails[0].firstname.charAt(0) + message.userdetails[0].lastname.charAt(0)} 
+                          </Avatar>
+                          <Typography variant="body1">{message.userdetails[0].firstname + " " + message.userdetails[0].lastname}</Typography>
+                        </div>
+                      </TableCell>
+                      <TableCell>{message.email}</TableCell>
+                      <TableCell>
+                        {message.meetup}
+                      </TableCell>
+                      <TableCell>{message.phone}</TableCell>
+                      <TableCell>
+                        {message.time}
+                      </TableCell>
+                      <TableCell>
+                        {message.duration}
+                      </TableCell>
+                      <TableCell>
+                        {message.subjects}
+                      </TableCell>
+                      <TableCell>
+                        <Tooltip title="Accept Student">
+                          <span><IconButton>
+                              <CheckCircleIcon onClick={((e) => this.selectAccept(e, message._id, user, message, 'accept'))} />
+                          </IconButton></span>
+                        </Tooltip>
+                        <Tooltip title="Decline Student">
+                          <span><IconButton>
+                              <CancelIcon onClick={((e) => this.selectAccept(e, message._id ,user, message, 'decline'))} />
+                          </IconButton></span>
+                        </Tooltip>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Paper>
+             ) : (
               <Grid item xs={12}>
                   <div className="padding20">
                       <Typography align="center" className="colorBlue"><WarningIcon id="warning"/> </Typography>
@@ -300,43 +294,38 @@ class Appointments extends Component {
           notificationContent = <ProgressSpinner />
         } else {
           notificationContent = Object.keys(messages).length > 0 ? (
-            <Card>
-              <CardContent className={classes.content}>
-                <PerfectScrollbar>
-                  <div className={classes.inner}>
-                    <Table>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>Appointment Details</TableCell>
-                          <TableCell>Payment Details</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {messages.map(message => (
-                          <TableRow
-                            className={classes.tableRow}
-                            hover
-                            key={message._id}
-                          >
-                            <TableCell>
-                              <div className={classes.nameContainer}>
-                                <Typography variant="body1">{message.userdetails[0].firstname + " " + message.userdetails[0].lastname} has accepted your appointment on {message.time} and to meet at {message.meetup} for {message.duration} hours for the subject {message.subjects}. Please pay PHP {this.paymentAmount(message.profiledetails[0].attainment, message.duration)}.</Typography>
-                              </div>
-                            </TableCell>
-                            <TableCell>
-                              <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-                                Pay Here
-                              </Button>
-                                <PaymentDialog dialogOpen={dialogOpen} handleClose={this.handleClose} message={message} />
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                </PerfectScrollbar>
-              </CardContent>
-            </Card> ) : (
+            <Paper className={classes.root}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Appointment Details</TableCell>
+                    <TableCell>Payment Details</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {messages.map(message => (
+                    <TableRow
+                      className={classes.tableRow}
+                      hover
+                      key={message._id}
+                    >
+                      <TableCell>
+                        <div className={classes.nameContainer}>
+                          <Typography variant="body1">{message.userdetails[0].firstname + " " + message.userdetails[0].lastname} has accepted your appointment on {message.time} and to meet at {message.meetup} for {message.duration} hours for the subject {message.subjects}. Please pay PHP {this.paymentAmount(message.profiledetails[0].attainment, message.duration)}.</Typography>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+                          Pay Here
+                        </Button>
+                          <PaymentDialog dialogOpen={dialogOpen} handleClose={this.handleClose} message={message} />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Paper>
+             ) : (
             <Grid item xs={12}>
                 <div className="padding20">
                     <Typography align="center" className="colorBlue"><WarningIcon id="warning"/> </Typography>

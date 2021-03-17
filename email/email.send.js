@@ -4,7 +4,7 @@ sgMail.setApiKey(process.env.SENDGRID_KEY)
 module.exports = async (to, content) => {
   const config = {
     to: to,
-    from: 'gabrieldaduya@gmail.com',
+    from: 'hans@hansdaduya.com',
     subject: 'Book A Tutor Email Confirmation',
     html: content
   }

@@ -167,5 +167,12 @@ router.post('/admin', passport.authenticate('jwt', { session: false}), (req, res
     });
 });
 
+router.get('/all', (req, res) => {
+   User.find({}, function(err, users) {
+    res.send(users);
+  });
+});
+
+
 
 module.exports = router;
