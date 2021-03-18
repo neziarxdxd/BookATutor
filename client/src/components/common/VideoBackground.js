@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
 
-import Img1 from '../../images/background-1.png';
-import Img2 from '../../images/background-2.png';
-import Img3 from '../../images/background-3.png';
-import Img4 from '../../images/background-4.png';
-import Img5 from '../../images/background-5.png';
-import Img6 from '../../images/background-6.png';
-import Img7 from '../../images/background-7.png';
-import Img8 from '../../images/background-8.png';
+import Img1 from '../../images/superman.jpg';
+import Img2 from '../../images/superman.jpg';
+import Img3 from '../../images/superman.jpg';
+import Img4 from '../../images/superman.jpg';
+import Img5 from '../../images/justiceleague.jpg';
+import Img6 from '../../images/justiceleague.jpg';
+import Img7 from '../../images/justiceleague.jpg';
+import Img8 from '../../images/justiceleague.jpg';
 import Img1v from '../../images/background-1-v.png';
 import Img2v from '../../images/background-2-v.png';
 import Img3v from '../../images/background-3-v.png';
@@ -18,8 +18,8 @@ import Img5v from '../../images/background-5-v.png';
 import Img6v from '../../images/background-6-v.png';
 import Img7v from '../../images/background-7-v.png';
 import Img8v from '../../images/background-8-v.png';
-import Logo from '../../images/background-logo.png';
-import Logo2 from '../../images/logo2.png';
+import Logo from '../../images/Magistrum-logo.png';
+import Logo2 from '../../images/Magistrum-logo.png';
 import '../layout/layout.css';
 
 class VideoBackground extends Component {

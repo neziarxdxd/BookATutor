@@ -26,7 +26,7 @@ import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import LogoImg from '../../images/logodark.png';
+import LogoImg from '../../images/Magistrum-logo.png';
 
 const drawerWidth = 240;
 
@@ -37,7 +37,7 @@ const styles = theme => ({
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
-    backgroundColor: '#494949',
+    backgroundColor: '#0274BC',
   },
   toolbarIcon: {
     display: 'flex',

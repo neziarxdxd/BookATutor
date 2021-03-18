@@ -48,7 +48,7 @@ class About extends Component {
                         Accessibility.    
                       </Typography>
                       <Typography variant="subtitle1" className="about-text">
-                        Book A Tutor was created with accessibility in mind. Our goal is to make academic aid more accessible for students of all majors.
+                        Magistrum was created with accessibility in mind for broke ass niggas. Our goal is to make academic aid more accessible for students of all majors.
                       </Typography>
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -104,7 +104,7 @@ class About extends Component {
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="caption" align="center" gutterBottom className="about-text">
-                            Developed 2020 by Hans Daduya
+                            Developed 2021 ©IC-Tech
                         </Typography>
                     </Grid>
                   </Grid>
