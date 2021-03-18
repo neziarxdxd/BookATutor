@@ -167,12 +167,19 @@ router.post('/admin', passport.authenticate('jwt', { session: false}), (req, res
     });
 });
 
-router.get('/all', (req, res) => {
-   User.find({}, function(err, users) {
-    res.send(users);
-  });
-});
-
-
+// @route   GET api/users/tutors
+// @desc    Gets all tutors
+// @access  Public
+router.get('/tutors', (req, res) => {
+    try {       
+         User.find({isTutor: true})
+         .select({id: 1, firstname: 1, lastname: 1, email: 1})
+         .exec((err, tutors) => {
+             res.send(tutors)
+         })
+     } catch (err) {
+         console.log(err);
+     }
+ });
 
 module.exports = router;
