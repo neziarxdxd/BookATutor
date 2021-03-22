@@ -77,10 +77,10 @@ class About extends Component {
                     </Grid>
                     <Grid item xs={12} md={4}>
                       <Typography variant="h6" className="about-text" gutterBottom>
-                        Is Book A Tutor connected to your email authentication?    
+                        Is Magistrum connected to your email authentication?    
                       </Typography>
                       <Typography variant="subtitle1" className="about-text">
-                        No. In order to use Book A Tutor, you will need to create an account. You must pre-register with your email address.
+                        No. In order to use Magistrum, you will need to create an account. You must pre-register with your email address.
                       </Typography>
                     </Grid>
                     <Grid item xs={12} md={4}>
