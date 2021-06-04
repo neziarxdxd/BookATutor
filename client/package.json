@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.1.2",
+    "@headlessui/react": "^1.2.0",
+    "@heroicons/react": "^1.0.1",
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.1",
+    "autoprefixer": "^9.8.6",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "formik": "^1.4.1",
@@ -12,19 +16,21 @@
     "jwt-decode": "^2.2.0",
     "moment": "^2.27.0",
     "npm": "^6.5.0",
+    "postcss": "^7.0.35",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-perfect-scrollbar": "^1.5.8",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^2.1.5",
+    "react-scripts": "4.0.3",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.7",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "craco start",
+    "build": "craco build",
     "test-react": "react-scripts test",
     "test": "jest",
     "eject": "react-scripts eject"

@@ -17,6 +17,7 @@ import AdminRoute from './components/common/AdminRoute';
 import PrivateRoute from './components/common/PrivateRoute';
 import AppNavbar from './components/layout/AppNavbar';
 import AppLanding from './components/layout/AppLanding';
+import Example from './components/layout/Example';
 import Register from './components/auth/Register';
 import RegisterTutor from './components/auth/RegisterTutor';
 import Login from './components/auth/Login';
@@ -85,6 +86,7 @@ class App extends Component {
                 <div className={classes.appBarSpacer} />
                 <Switch>
                   <Route exact path="/" component={AppLanding} />
+                  <Route exact path="/example" component={Example} /> 
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/register-tutor" component={RegisterTutor} />
                   <Route exact path="/login" component={Login} />
