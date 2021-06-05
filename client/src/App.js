@@ -11,6 +11,7 @@ import { clearCurrentProfile } from './redux/actions/profileActions';
 // MUI imports
 import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { MuiThemeProvider } from "@material-ui/core";
 
 // components
 import AdminRoute from './components/common/AdminRoute';
@@ -33,6 +34,7 @@ import ViewSubjects from './components/admin/ViewSubjects';
 import EditSubjects from './components/admin/EditSubjects';
 import Users from './components/admin/Users';
 import About from './components/common/About';
+import theme from "./theme";
 
 import NotFound from './components/common/NotFound';
 
@@ -79,6 +81,7 @@ class App extends Component {
     return (
         <Provider store={ store }>
           <Router>
+            <MuiThemeProvider theme={theme}>
             <div className="App">
               <CssBaseline />
               <AppNavbar />
@@ -110,6 +113,7 @@ class App extends Component {
                 </Switch>
               </main>
             </div>
+          </MuiThemeProvider>
           </Router>
         </Provider>
     );
